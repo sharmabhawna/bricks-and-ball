@@ -1,31 +1,36 @@
 const applyPixel = dimention => dimention + "px";
 
-const movePaddle = function(document, paddle) {
+const movePedal = function(document, game) {
 	let { key } = event;
 	let toMove = { ArrowLeft: "moveLeft", ArrowRight: "moveRight" };
-	paddle[toMove[key]]();
-	drawPaddle(document, paddle);
+	game.pedal[toMove[key]]();
+	game.bouncePedal();
+	drawPedal(document, game.pedal);
 };
 
-const generateGameEntities = function(document, paddle, ball) {
-	createPaddleDiv(document);
+const generateGameEntities = function(document, wall, pedal, ball) {
+	createWall(document);
+	createPedalDiv(document);
 	createBallDiv(document);
-	drawPaddle(document, paddle);
+	drawWall(document, wall);
+	drawPedal(document, pedal);
 	drawBall(document, ball);
 };
 
 const initialize = function() {
-	let paddle = new Paddle(100, 15, 5, 5, 1000);
+	let wall = new Wall(1000, 650, 0, 200);
+	let pedal = new Pedal(100, 15, 5, 10, 50);
 	let velocity = new Velocity(10, 10);
 	let ball = new Ball(50, 20, 25, velocity);
-	generateGameEntities(document, paddle, ball);
-	getGameScreen(document).tabIndex = "0";
-	getGameScreen(document).focus();
-	getGameScreen(document).onkeydown = movePaddle.bind("null", document, paddle);
-	setInterval(() => {
-		ball.moveBall();
-		drawBall(document, ball);
-	}, 50);
+	let game = new Game(wall, pedal, ball);
+	generateGameEntities(document, wall, pedal, ball);
+	getWall(document).tabIndex = "0";
+	getWall(document).focus();
+	getWall(document).onkeydown = movePedal.bind("null", document, game);
+	// setInterval(() => {
+	// 	ball.moveBall();
+	// 	drawBall(document, ball);
+	// }, 50);
 };
 
 window.onload = initialize;

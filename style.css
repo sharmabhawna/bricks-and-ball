@@ -1,12 +1,9 @@
-main {
-	width: 1000px;
-	height: 650px;
-	margin: auto;
-	position: relative;
+.wall {
 	border: 1px solid black;
+	position: relative;
 }
 
-.paddle {
+.pedal {
 	background-color: black;
 	position: absolute;
 }

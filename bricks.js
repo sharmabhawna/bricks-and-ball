@@ -1,24 +1,48 @@
-class Paddle {
-	constructor(width, height, bottom, left, bound) {
+class Game {
+	constructor(wall, pedal, ball) {
+		this.wall = wall;
+		this.pedal = pedal;
+		this.ball = ball;
+	}
+
+	bouncePedal() {
+		let wallLeftBorder = 0;
+		let wallRightBorder = this.wall.width - this.pedal.width;
+
+		if (this.pedal.left <= wallLeftBorder) {
+			this.pedal.left = wallLeftBorder;
+		}
+
+		if (this.pedal.left >= wallRightBorder) {
+			this.pedal.left = wallRightBorder;
+		}
+	}
+}
+
+class Wall {
+	constructor(width, height, bottom, left) {
 		this.width = width;
 		this.height = height;
 		this.bottom = bottom;
 		this.left = left;
-		this.bound = bound;
+	}
+}
+
+class Pedal {
+	constructor(width, height, bottom, left, displacement) {
+		this.width = width;
+		this.height = height;
+		this.bottom = bottom;
+		this.left = left;
+		this.displacement = displacement;
 	}
 
 	moveLeft() {
-		this.left = this.left - 50;
-		if (this.left < 0) {
-			this.left = 0;
-		}
+		this.left = this.left - this.displacement;
 	}
 
 	moveRight() {
-		this.left = this.left + 50;
-		if (this.left > 900) {
-			this.left = 900;
-		}
+		this.left = this.left + this.displacement;
 	}
 }
 
