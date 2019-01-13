@@ -1,20 +1,45 @@
 class Game {
-	constructor(wall, pedal, ball) {
+	constructor(wall, pedal, ball, status) {
 		this.wall = wall;
 		this.pedal = pedal;
 		this.ball = ball;
+		this.status = status;
 	}
 
 	bouncePedal() {
-		let wallLeftBorder = 0;
-		let wallRightBorder = this.wall.width - this.pedal.width;
+		let wallLeftEdge = 0;
+		let wallRightEdge = this.wall.width - this.pedal.width;
 
-		if (this.pedal.left <= wallLeftBorder) {
-			this.pedal.left = wallLeftBorder;
+		if (this.pedal.left <= wallLeftEdge) {
+			this.pedal.left = wallLeftEdge;
 		}
 
-		if (this.pedal.left >= wallRightBorder) {
-			this.pedal.left = wallRightBorder;
+		if (this.pedal.left >= wallRightEdge) {
+			this.pedal.left = wallRightEdge;
+		}
+	}
+
+	bounceBall() {
+		let wallLeftEdge = 0;
+		let wallRightEdge = this.wall.width - this.ball.radius;
+		let wallTopEdge = this.wall.height - this.ball.radius;
+		let wallBottomEdge = 0;
+		this.status = "continue";
+
+		if (this.ball.bottom <= wallBottomEdge) {
+			this.status = "stop";
+		}
+
+		if (this.ball.left <= wallLeftEdge) {
+			this.ball.velocity.inverseHorizontalComponent();
+		}
+
+		if (this.ball.left >= wallRightEdge) {
+			this.ball.velocity.inverseHorizontalComponent();
+		}
+
+		if (this.ball.bottom >= wallTopEdge) {
+			this.ball.velocity.inverseVerticalComponent();
 		}
 	}
 }

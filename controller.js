@@ -27,10 +27,18 @@ const initialize = function() {
 	getWall(document).tabIndex = "0";
 	getWall(document).focus();
 	getWall(document).onkeydown = movePedal.bind("null", document, game);
-	// setInterval(() => {
-	// 	ball.moveBall();
-	// 	drawBall(document, ball);
-	// }, 50);
+	setInterval(() => {
+		game.ball.moveBall();
+		drawBall(document, ball);
+		game.bounceBall();
+		if (game.status == "stop") {
+			endGame(document);
+		}
+	}, 100);
+};
+
+const endGame = function(document) {
+	document.write("Game Over");
 };
 
 window.onload = initialize;
