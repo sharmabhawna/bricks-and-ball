@@ -28,15 +28,15 @@ const generateGameEntities = function(document, wall, pedal, ball) {
 
 const initialize = function() {
 	let wall = new Wall(1000, 650, 0, 200);
-	let pedal = new Pedal(100, 15, 5, 10, 50);
+	let pedal = new Pedal(100, 15, 0, 10, 50);
 	let velocity = new Velocity(10, 10);
-	let ball = new Ball(50, 20, 25, velocity);
+	let ball = new Ball(50, 15, 25, velocity);
 	let game = new Game(wall, pedal, ball, "start");
 	generateGameEntities(document, wall, pedal, ball);
 	getWall(document).tabIndex = "0";
 	getWall(document).focus();
 	getWall(document).onkeydown = movePedal.bind("null", document, game);
-	setInterval(() => moveBall(document, game), 50);
+	setInterval(() => moveBall(document, game), 100);
 };
 
 const endGame = function(document) {

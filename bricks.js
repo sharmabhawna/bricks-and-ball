@@ -1,3 +1,8 @@
+const isBetween = function(value, range) {
+	let { leftLimit, rightLimit } = range;
+	return value >= leftLimit && value <= rightLimit;
+};
+
 class Game {
 	constructor(wall, pedal, ball, status) {
 		this.wall = wall;
@@ -20,25 +25,43 @@ class Game {
 	}
 
 	bounceBall() {
-		let wallLeftEdge = 0;
-		let wallRightEdge = this.wall.width - this.ball.radius;
-		let wallTopEdge = this.wall.height - this.ball.radius;
-		let wallBottomEdge = 0;
+		const wallLeftEdge = 0;
+		const wallRightEdge = this.wall.width - this.ball.radius;
+		const wallTopEdge = this.wall.height - this.ball.radius;
+		const wallBottomEdge = 0;
+		const pedalRange = {
+			leftLimit: this.pedal.left,
+			rightLimit: this.pedal.left + this.pedal.width
+		};
+
+		const isOnPedal = this.ball.bottom == this.pedal.bottom + this.pedal.height;
+
 		this.status = "continue";
 
-		if (this.ball.bottom <= wallBottomEdge) {
+		const hasCollisionWithBottomEdge = this.ball.bottom <= wallBottomEdge;
+		const hasCollisionWithLeftEdge = this.ball.left <= wallLeftEdge;
+		const hasCollisionWithRightEdge = this.ball.left >= wallRightEdge;
+		const hasCollisionWithTopEdge = this.ball.bottom >= wallTopEdge;
+		const hasCollisionWithPedal =
+			isBetween(this.ball.left, pedalRange) && isOnPedal;
+
+		if (hasCollisionWithBottomEdge) {
 			this.status = "stop";
 		}
 
-		if (this.ball.left <= wallLeftEdge) {
+		if (hasCollisionWithLeftEdge) {
 			this.ball.velocity.inverseHorizontalComponent();
 		}
 
-		if (this.ball.left >= wallRightEdge) {
+		if (hasCollisionWithRightEdge) {
 			this.ball.velocity.inverseHorizontalComponent();
 		}
 
-		if (this.ball.bottom >= wallTopEdge) {
+		if (hasCollisionWithTopEdge) {
+			this.ball.velocity.inverseVerticalComponent();
+		}
+
+		if (hasCollisionWithPedal) {
 			this.ball.velocity.inverseVerticalComponent();
 		}
 	}
