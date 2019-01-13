@@ -94,7 +94,7 @@ class Ball {
 		this.velocity = velocity;
 	}
 
-	moveBall() {
+	moveAround() {
 		this.left += this.velocity.x;
 		this.bottom += this.velocity.y;
 	}

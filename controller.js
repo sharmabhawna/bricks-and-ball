@@ -8,6 +8,15 @@ const movePedal = function(document, game) {
 	drawPedal(document, game.pedal);
 };
 
+const moveBall = function(document, game) {
+	game.ball.moveAround();
+	drawBall(document, game.ball);
+	game.bounceBall();
+	if (game.status == "stop") {
+		endGame(document);
+	}
+};
+
 const generateGameEntities = function(document, wall, pedal, ball) {
 	createWall(document);
 	createPedalDiv(document);
@@ -22,19 +31,12 @@ const initialize = function() {
 	let pedal = new Pedal(100, 15, 5, 10, 50);
 	let velocity = new Velocity(10, 10);
 	let ball = new Ball(50, 20, 25, velocity);
-	let game = new Game(wall, pedal, ball);
+	let game = new Game(wall, pedal, ball, "start");
 	generateGameEntities(document, wall, pedal, ball);
 	getWall(document).tabIndex = "0";
 	getWall(document).focus();
 	getWall(document).onkeydown = movePedal.bind("null", document, game);
-	setInterval(() => {
-		game.ball.moveBall();
-		drawBall(document, ball);
-		game.bounceBall();
-		if (game.status == "stop") {
-			endGame(document);
-		}
-	}, 100);
+	setInterval(() => moveBall(document, game), 50);
 };
 
 const endGame = function(document) {
