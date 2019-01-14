@@ -37,15 +37,15 @@ class Game {
 		this.status = "continue";
 
 		if (this.ball.left <= 0) {
-			this.ball.velocity.inverseHorizontalComponent();
+			this.ball.velocity.invertHorizontalComponent();
 		}
 
 		if (ballRight >= this.wall.width) {
-			this.ball.velocity.inverseHorizontalComponent();
+			this.ball.velocity.invertHorizontalComponent();
 		}
 
 		if (ballTop >= this.wall.height) {
-			this.ball.velocity.inverseVerticalComponent();
+			this.ball.velocity.invertVerticalComponent();
 		}
 
 		if (this.ball.bottom <= 0) {
@@ -53,7 +53,7 @@ class Game {
 		}
 
 		if (hasCollisionWithPedal) {
-			this.ball.velocity.inverseVerticalComponent();
+			this.ball.velocity.invertVerticalComponent();
 		}
 	}
 }
@@ -91,11 +91,11 @@ class Velocity {
 		this.y = y;
 	}
 
-	inverseHorizontalComponent() {
+	invertHorizontalComponent() {
 		this.x = -1 * this.x;
 	}
 
-	inverseVerticalComponent() {
+	invertVerticalComponent() {
 		this.y = -1 * this.y;
 	}
 }
